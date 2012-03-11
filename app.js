@@ -85,6 +85,39 @@ function changeState(req, res) {
           controller["current-states"][i].value=state.value;
         }
       }
+      // computer modified state
+      controller.actions = [];
+      if(list[0].value==='closed' && list[1].value=='on' && list[2].value==='open') {
+        controller.actions[0] = {"name": "door", "href": "/controller", "body" : {"name" : "door", "value" : "open"}};
+        controller.actions[1] = {"name": "light", "href": "/controller", "body" : {"name" : "light", "value" : "off"}};
+        controller.actions[2] = {"name": "drawer", "href": "/controller", "body" : {"name" : "drawer", "value" : "closed"}};
+        controller.actions[3] = {"name": "panel", "href": "/controller", "body" : {"name" : "panel", "value" : "open"}};
+      }
+      else if(list[0].value==='open') {
+        controller.actions[0] = {"name": "door", "href": "/controller", "body" : {"name" : "door", "value" : "closed"}};
+        controller["current-states"][1].value="off";
+        controller["current-states"][2].value="closed";
+        controller["current-states"][3].value="closed";
+      }
+      else if(list[0].value=='closed' && list[1].value==='off' && list[2].value==='closed') {
+        controller.actions[0] = {"name": "door", "href": "/controller", "body" : {"name" : "door", "value" : "open"}};
+        controller.actions[1] = {"name": "light", "href": "/controller", "body" : {"name" : "light", "value" : "on"}};
+        controller.actions[2] = {"name": "drawer", "href": "/controller", "body" : {"name" : "drawer", "value" : "open"}};
+        controller["current-states"][3].value="closed";
+      }
+      else if(list[0].value=='closed' && list[1].value==='on' && list[2].value==='closed') {
+        controller.actions[0] = {"name": "door", "href": "/controller", "body" : {"name" : "door", "value" : "open"}};
+        controller.actions[1] = {"name": "light", "href": "/controller", "body" : {"name" : "light", "value" : "off"}};
+        controller.actions[2] = {"name": "drawer", "href": "/controller", "body" : {"name" : "drawer", "value" : "open"}};
+        controller["current-states"][3].value="closed";
+      }
+      else if(list[0].value=='closed' && list[1].value==='off' && list[2].value==='open') {
+        controller.actions[0] = {"name": "door", "href": "/controller", "body" : {"name" : "door", "value" : "open"}};
+        controller.actions[1] = {"name": "light", "href": "/controller", "body" : {"name" : "light", "value" : "on"}};
+        controller.actions[2] = {"name": "drawer", "href": "/controller", "body" : {"name" : "drawer", "value" : "closed"}};
+        controller["current-states"][3].value="closed";
+      }
+      // return response representation
       emitState(res);
     }
     catch(ex) {

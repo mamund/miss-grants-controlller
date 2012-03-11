@@ -1,0 +1,12 @@
+Miss Grant's Controller
+2012-03-09 (mca)
+
+Sample hypermedia M2M app based on MArtin Fowler's Miss Grant's Controller
+example found in his book "Domain Specific Languages"[1]. This example
+appears in the first chapter.
+
+
+
+
+
+[1]http://my.safaribooksonline.com/book/software-engineering-and-development/ide/9780132107549

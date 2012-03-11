@@ -1,9 +1,12 @@
 /* miss grants controller M2M sample */
 /*
 NOTE:
-this is the HUMAN version
-if offers a variable number of transitions per representation
-humans can select ones that interest them in any order allowed
+this is the MACHINE version
+it only offers upt to two transitions per representation
+each transition offers only one possible value
+machines choose between
+  the "known" (first one is always offered)
+  and the "unknown" ()the changing transition option)
 */
 
 var fs = require('fs');
@@ -99,9 +102,7 @@ function changeState(req, res) {
       }
       else if(list[0].value==='closed' && list[1].value=='on' && list[2].value==='open') {
         controller.actions[0] = {"name": "door", "href": "/controller", "body" : {"name" : "door", "value" : "open"}};
-        controller.actions[1] = {"name": "light", "href": "/controller", "body" : {"name" : "light", "value" : "off"}};
-        controller.actions[2] = {"name": "drawer", "href": "/controller", "body" : {"name" : "drawer", "value" : "closed"}};
-        controller.actions[3] = {"name": "panel", "href": "/controller", "body" : {"name" : "panel", "value" : "open"}};
+        controller.actions[1] = {"name": "panel", "href": "/controller", "body" : {"name" : "panel", "value" : "open"}};
       }
       else if(list[0].value==='open') {
         controller.actions[0] = {"name": "door", "href": "/controller", "body" : {"name" : "door", "value" : "closed"}};
@@ -112,19 +113,16 @@ function changeState(req, res) {
       else if(list[0].value=='closed' && list[1].value==='off' && list[2].value==='closed') {
         controller.actions[0] = {"name": "door", "href": "/controller", "body" : {"name" : "door", "value" : "open"}};
         controller.actions[1] = {"name": "light", "href": "/controller", "body" : {"name" : "light", "value" : "on"}};
-        controller.actions[2] = {"name": "drawer", "href": "/controller", "body" : {"name" : "drawer", "value" : "open"}};
         controller["current-states"][3].value="closed";
       }
       else if(list[0].value=='closed' && list[1].value==='on' && list[2].value==='closed') {
         controller.actions[0] = {"name": "door", "href": "/controller", "body" : {"name" : "door", "value" : "open"}};
-        controller.actions[1] = {"name": "light", "href": "/controller", "body" : {"name" : "light", "value" : "off"}};
-        controller.actions[2] = {"name": "drawer", "href": "/controller", "body" : {"name" : "drawer", "value" : "open"}};
+        controller.actions[1] = {"name": "drawer", "href": "/controller", "body" : {"name" : "drawer", "value" : "open"}};
         controller["current-states"][3].value="closed";
       }
       else if(list[0].value=='closed' && list[1].value==='off' && list[2].value==='open') {
         controller.actions[0] = {"name": "door", "href": "/controller", "body" : {"name" : "door", "value" : "open"}};
         controller.actions[1] = {"name": "light", "href": "/controller", "body" : {"name" : "light", "value" : "on"}};
-        controller.actions[2] = {"name": "drawer", "href": "/controller", "body" : {"name" : "drawer", "value" : "closed"}};
         controller["current-states"][3].value="closed";
       }
       // return response representation

@@ -1,0 +1,105 @@
+<html>
+  <head>
+    <title>Miss Grant's Controller</title>
+  </head>
+  <body>
+    <h1>Miss Grant's Controller</h1>
+    <h3>States</h3>
+    <div id="states">
+    </div>
+    <div id="actions"></states>
+  </body>
+  <script>
+    window.onload = function() {
+      var mg = missGrant();
+      mg.init();
+    };
+
+    var missGrant = function() {
+
+      var g = {};
+      g.controller = {};
+      g.controllerUrl = '/controller';
+
+      function init() {
+        makeRequest(g.controllerUrl)
+      }
+
+      function displayState() {
+        var elm, dl, dt, dd, states, btn, actions;
+
+        states = g.controller["current-states"];
+        elm = document.getElementById('states');
+        if(elm) {
+          elm.innerHTML='';
+          dl = document.createElement('dl');
+          for(i=0,x=states.length;i<x;i++) {
+            dt = document.createElement('dt');
+            dt.appendChild(document.createTextNode(states[i].name));
+            dd = document.createElement('dd');
+            dd.appendChild(document.createTextNode(states[i].value));
+            dl.appendChild(dt);
+            dl.appendChild(dd);
+          }
+          elm.appendChild(dl);
+        }
+
+        actions = g.controller.actions;
+        elm = document.getElementById('actions');
+        if(elm) {
+          elm.innerHTML = '';
+          for(i=0,x=actions.length;i<x;i++) {
+            btn = document.createElement('button');
+            btn.setAttribute('href',actions[i].href);
+            btn.setAttribute('body', "name="+actions[i].body.name+'&value='+actions[i].body.value);
+            btn.appendChild(document.createTextNode('Set '+actions[i].body.name + ' to ' + actions[i].body.value));
+            btn.onclick = changeState;
+            elm.appendChild(btn);
+          }
+        }
+      }
+
+      function changeState() {
+        makeRequest(this.getAttribute('href'),this.getAttribute('body'));
+      }
+
+      function makeRequest(href, body) {
+        var ajax;
+
+        ajax=new XMLHttpRequest();
+        if(ajax) {
+
+          ajax.onreadystatechange = function(){processResponse(ajax);};
+
+          if(body) {
+            ajax.open('put',href,false);
+            ajax.setRequestHeader("content-type","application/x-www-form-urlencoded");
+            ajax.send(body);
+          }
+          else {
+            ajax.open('get',href,false);
+            ajax.send(null);
+          }
+        }
+      }
+
+      function processResponse(ajax) {
+
+        if(ajax.readyState==4 || ajax.readyState==='complete') {
+          if(ajax.status===200 || ajax.status===204) {
+            g.controller = JSON.parse(ajax.responseText);
+            displayState();
+          }
+          else {
+            alert('*** ERROR: '+ajax.status+'\n'+ajax.statusText);
+          }
+        }
+      }
+
+var that = {};
+      that.init = init;
+      return that;
+    };
+
+  </script>
+</html>

@@ -22,7 +22,7 @@
       g.controllerUrl = '/controller';
 
       function init() {
-        makeRequest(g.controllerUrl)
+        makeRequest(g.controllerUrl);
       }
 
       function displayState() {
@@ -53,14 +53,10 @@
             btn.setAttribute('href',actions[i].href);
             btn.setAttribute('body', "name="+actions[i].body.name+'&value='+actions[i].body.value);
             btn.appendChild(document.createTextNode('Set '+actions[i].body.name + ' to ' + actions[i].body.value));
-            btn.onclick = changeState;
+            btn.onclick = function(){makeRequest(this.getAttribute('href'),this.getAttribute('body'));};
             elm.appendChild(btn);
           }
         }
-      }
-
-      function changeState() {
-        makeRequest(this.getAttribute('href'),this.getAttribute('body'));
       }
 
       function makeRequest(href, body) {
@@ -78,6 +74,7 @@
           }
           else {
             ajax.open('get',href,false);
+            ajax.setRequestHeader("accept","application/json");
             ajax.send(null);
           }
         }
@@ -96,7 +93,7 @@
         }
       }
 
-var that = {};
+      var that = {};
       that.init = init;
       return that;
     };

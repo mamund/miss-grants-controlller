@@ -1,0 +1,41 @@
+<!-- media type model for miss grant's controller -->
+<controller href="...">
+    <!-- all states tracked, all possible settings-->
+    <possible-states>
+        <door>
+            <state>open</state>
+            <state>closed</state>
+        </door>
+        <light>
+            <state>on</state>
+            <state>off</state>
+        </light>
+        <drawer>
+            <state>open</state>
+            <state>closed</state>
+        </drawer>
+        <panel>
+            <state>open</state>
+            <state>closed</state>
+        </panel>
+    </possible-states>
+    <!-- current state at this moment -->
+    <current-states>
+        <door>open</door>
+        <light>off</light>
+        <drawer>closed</drawer>
+        <panel>closed</panel>
+    <current-states>
+    <!-- possible actions (will adjust based on current state -->
+    <actions>
+        <!-- execute PUT w/ x-www-form-urlencoded -->
+        <door href="..."><state>open</state></door>
+        <door href="..."><state>closed</state></door>
+        <light href="..."><state>on</state></door>
+        <light href="..."><state>off</state></door>
+        <drawer href="..."><state>open</state></door>
+        <drawer href="..."><state>closed</state></door>
+        <panel href="..."><state>open</state></door>
+        <panel href="..."><state>closed</state></door>
+    </actions>
+</controller>

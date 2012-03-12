@@ -12,6 +12,7 @@ human-driven cases.
 var fs = require('fs');
 var http = require('http');
 var querystring = require('querystring');
+var util = require('util');
 
 /* initial state */
 var controller = {};
@@ -76,6 +77,8 @@ function sendFile(err, file, res) {
 
 function emitState(res) {
   emitResponse(res, 200, JSON.stringify(controller), "application/json");
+  console.log("response body:\r\n", util.inspect(controller,false,null));
+  console.log("================================================");
 }
 
 function changeState(req, res) {
@@ -88,6 +91,7 @@ function changeState(req, res) {
   req.on('end', function() {
     var state, list, i, x;
     state = querystring.parse(body);
+    console.log("request body:", body);
     try {
       list = controller["current-states"];
       for(i=0,x=list.length;i<x;i++) {

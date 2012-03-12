@@ -51,6 +51,7 @@
             dl.appendChild(dt);
             dl.appendChild(dd);
 
+            // update the state your are monitoring
             if(g.bot===true) {
               if(states[i].name===g.targetState.name) {
                 g.targetState.currentValue = states[i].value;
@@ -76,8 +77,10 @@
           }
         }
 
+        // if bot is 'on'
+        // let's make a reuest!
         if(g.bot===true) {
-          botChoice();
+          botActivate();
         }
       }
 
@@ -116,7 +119,7 @@
         botChoice();
       }
 
-      function botChoice() {
+      function botActivate() {
         var coll, i, x;
 
         if(g.targetState.currentValue===g.targetState.successValue) {
@@ -189,18 +192,18 @@
       return that;
     };
 
-  /* extend array, if needed */
-  if(!Array.contains) {
-    Array.prototype.contains = function(obj) {
-      var i = this.length;
-      while (i--) {
-          if (this[i] === obj) {
-              return true;
-          }
+    /* extend array, if needed */
+    if(!Array.contains) {
+      Array.prototype.contains = function(obj) {
+        var i = this.length;
+        while (i--) {
+            if (this[i] === obj) {
+                return true;
+            }
+        }
+        return false;
       }
-      return false;
     }
-  }
 
   </script>
 </html>

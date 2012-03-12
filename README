@@ -30,5 +30,8 @@ To run this version, usem2m-app.js as the startup script and follow along in the
 Note that the MACHINE version offers a "start bot" option. This will run a bot
 that follows the action elements to achieve the goal.
 
+BTW - since the interface for the bot verions is kept very limited (only one option
+moves the application forward), it is possible to introduce new steps along the chain
+and the bot will still achieve the goal (w/o any change in the user-agent programming).
 
 [1]http://my.safaribooksonline.com/book/software-engineering-and-development/ide/9780132107549

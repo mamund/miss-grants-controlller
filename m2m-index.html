@@ -24,6 +24,7 @@
       g.controllerUrl = '/controller';
 
       g.bot = false;
+      g.botPause = 1000;
       g.actions = [];
       g.targetState = {};
       g.targetState.name="panel";
@@ -80,7 +81,7 @@
         // if bot is 'on'
         // let's make a reuest!
         if(g.bot===true) {
-          botActivate();
+          setTimeout(botActivate, g.botPause);
         }
       }
 
@@ -116,7 +117,7 @@
         g.targetState.successValue="open";
         g.targetState.currentValue=""
 
-        botChoice();
+        botActivate();
       }
 
       function botActivate() {

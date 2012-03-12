@@ -141,4 +141,4 @@ function emitResponse(res, status, text, type) {
   res.end(text);
 }
 
-http.createServer(handler).listen(process.env.PORT);
+http.createServer(handler).listen(process.env.PORT||1337);

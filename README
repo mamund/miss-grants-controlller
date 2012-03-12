@@ -27,7 +27,8 @@ same number of transitions.
 
 To run this version, usem2m-app.js as the startup script and follow along in the UI.
 
-
+Note that the MACHINE version offers a "start bot" option. This will run a bot
+that follows the action elements to achieve the goal.
 
 
 

@@ -11,6 +11,13 @@ var http = require('http');
 var querystring = require('querystring');
 var util = require('util');
 
+var messageColor = '\033[36m';
+var bodyColor = '\033[32m';
+var lineColor = '\033[37m';
+var resetColor = '\033[0m';
+
+var log = (process.argv.length > 2 && process.argv[2] == 'log');
+
 /* initial state */
 var controller = {};
 controller.href="/controller";
@@ -73,8 +80,11 @@ function sendFile(err, file, res) {
 }
 function emitState(res) {
   emitResponse(res, 200, JSON.stringify(controller), "application/json");
-  console.log("response body:\r\n", util.inspect(controller,false,null));
-  console.log("================================================");
+
+  if (log) {
+    console.log(messageColor + "response body:\r\n", bodyColor + util.inspect(controller,false,null));
+    console.log(lineColor + "================================================" + resetColor);
+  }
 }
 
 function changeState(req, res) {
@@ -87,7 +97,9 @@ function changeState(req, res) {
   req.on('end', function() {
     var state, list, i, x;
     state = querystring.parse(body);
-    console.log("request body:", body);
+    if (log)
+      console.log(messageColor + "request body:", bodyColor + body);
+    
     try {
       list = controller["current-states"];
       for(i=0,x=list.length;i<x;i++) {

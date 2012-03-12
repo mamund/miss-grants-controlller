@@ -6,7 +6,7 @@ it only offers up to two transitions per representation
 each transition offers only one possible value
 machines choose between
   the "known" (first one is always offered)
-  and the "unknown" ()the changing transition option)
+  and the "unknown" (the changing transition option)
 
 this shows how M2M cases utilize a different 'UX' (MX?) than
 human-driven cases.
@@ -76,6 +76,7 @@ function sendFile(err, file, res) {
     emitResponse(res, 200, file, "text/html");
   }
 }
+
 function emitState(res) {
   emitResponse(res, 200, JSON.stringify(controller), "application/json");
 }

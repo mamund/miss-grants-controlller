@@ -5,6 +5,29 @@ Sample hypermedia M2M app based on MArtin Fowler's Miss Grant's Controller
 example found in his book "Domain Specific Languages"[1]. This example
 appears in the first chapter.
 
+ASSUMED GOAL
+The goal for this project is to open the "secret" panel. It is only possible
+after certain tasks are completed (i.e. certain items are in the proper "state").
+
+HUMAN Version (app.js)
+The version "tuned" for humans to use provides more than two transition options
+in responses. Humans are given the options to "play around" with the set of
+objects in order to reach the proper "state" and achieve success.
+
+To run this version, use app.js as the startup script and follow along in the UI.
+
+MACHINE Version (m2m-app.js)
+The version "tuned" for machines to use supports the same outcome, but does so
+via a different "interface" to the same set of states. The machine is only
+offered up to two transition options each time (and one of them is to return
+to the start). The machine also is not asked to provide any unique variables
+for the transitions; just to use the data supplied in the affordance. With these
+constraints the machine interface is able to reach teh same goal in almost the
+same number of transitions.
+
+To run this version, usem2m-app.js as the startup script and follow along in the UI.
+
+
 
 
 

@@ -4,6 +4,8 @@
   </head>
   <body>
     <h1>Miss Grant's Controller</h1>
+    <button id="start-bot">start bot</button>
+    <button id="stop-bot" style="display:none;">stop bot</button>
     <h3>States</h3>
     <div id="states">
     </div>
@@ -21,7 +23,15 @@
       g.controller = {};
       g.controllerUrl = '/controller';
 
+      g.bot = false;
+      g.actions = [];
+      g.targetState = {};
+      g.targetState.name="panel";
+      g.targetState.successValue="open";
+      g.targetState.currentValue=""
+
       function init() {
+        botEvents();
         makeRequest(g.controllerUrl);
       }
 
@@ -40,6 +50,12 @@
             dd.appendChild(document.createTextNode(states[i].value));
             dl.appendChild(dt);
             dl.appendChild(dd);
+
+            if(g.bot===true) {
+              if(states[i].name===g.targetState.name) {
+                g.targetState.currentValue = states[i].value;
+              }
+            }
           }
           elm.appendChild(dl);
         }
@@ -50,6 +66,8 @@
           elm.innerHTML = '';
           for(i=0,x=actions.length;i<x;i++) {
             btn = document.createElement('button');
+            btn.className='action';
+            btn.name=actions[i].body.name;
             btn.setAttribute('href',actions[i].href);
             btn.setAttribute('body', "name="+actions[i].body.name+'&value='+actions[i].body.value);
             btn.appendChild(document.createTextNode('Set '+actions[i].body.name + ' to ' + actions[i].body.value));
@@ -57,6 +75,79 @@
             elm.appendChild(btn);
           }
         }
+
+        if(g.bot===true) {
+          botChoice();
+        }
+      }
+
+      function botEvents() {
+        var elm;
+
+        elm = document.getElementById('start-bot');
+        if(elm) {
+          elm.onclick = botStart;
+        }
+        elm = document.getElementById('stopbot');
+        if(elm) {
+          elm.onclick = botStop;
+        }
+      }
+
+      function botStart() {
+        var elm;
+
+        elm = document.getElementById('stop-bot');
+        if(elm) {
+          elm.style.display='inline';
+        }
+        elm = document.getElementById('start-bot');
+        if(elm) {
+          elm.style.display='none';
+        }
+
+        g.bot = true;
+        g.actions=[];
+        g.targetState = {};
+        g.targetState.name="panel";
+        g.targetState.successValue="open";
+        g.targetState.currentValue=""
+
+        botChoice();
+      }
+
+      function botChoice() {
+        var coll, i, x;
+
+        if(g.targetState.currentValue===g.targetState.successValue) {
+          alert('bot is done!');
+          botStop();
+        }
+        else {
+          coll = document.getElementsByTagName('button');
+          for(i=0, x=coll.length; i<x; i++) {
+            if(coll[i].className.indexOf('action')!==-1) {
+              if(g.actions.contains(coll[i].name)===false) {
+                g.actions.push(coll[i].name);
+                coll[i].click();
+              }
+            }
+          }
+        }
+      }
+
+      function botStop() {
+        var elm;
+
+        elm = document.getElementById('stop-bot');
+        if(elm) {
+          elm.style.display='none';
+        }
+        elm = document.getElementById('start-bot');
+        if(elm) {
+          elm.style.display='inline';
+        }
+        g.bot = false;
       }
 
       function makeRequest(href, body) {
@@ -97,6 +188,19 @@
       that.init = init;
       return that;
     };
+
+  /* extend array, if needed */
+  if(!Array.contains) {
+    Array.prototype.contains = function(obj) {
+      var i = this.length;
+      while (i--) {
+          if (this[i] === obj) {
+              return true;
+          }
+      }
+      return false;
+    }
+  }
 
   </script>
 </html>

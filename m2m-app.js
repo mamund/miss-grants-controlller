@@ -66,7 +66,7 @@ function handler(req, res) {
 }
 
 function emitHtml(res) {
-  fs.readFile("./index.html", "binary", function(err, file){sendFile(err, file, res);});
+  fs.readFile("./m2m-index.html", "binary", function(err, file){sendFile(err, file, res);});
 }
 function sendFile(err, file, res) {
   if(err) {
